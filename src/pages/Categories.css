@@ -1,0 +1,328 @@
+/* ========================================
+   CATEGORIES PAGE — Apple iOS-Inspired
+   ======================================== */
+
+.categories-container {
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.categories-header {
+    margin-bottom: 8px;
+}
+
+.categories-header h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.categories-header p {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+
+.categories-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px 0;
+}
+
+.date-selector {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.add-category-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.82rem;
+    box-shadow: 0 2px 8px var(--primary-glow);
+    transition: all var(--transition-fast);
+}
+
+.add-category-btn:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 4px 16px var(--primary-glow);
+    transform: translateY(-1px);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+}
+
+.category-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+    padding: 24px;
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Category-specific Glass Tints & Hover Glows */
+.card-food {
+    background: rgba(255, 55, 95, 0.05);
+}
+
+.card-hospital {
+    background: rgba(175, 82, 222, 0.05);
+}
+
+.card-fuel {
+    background: rgba(0, 122, 255, 0.05);
+}
+
+.card-utilities {
+    background: rgba(255, 159, 10, 0.05);
+}
+
+.card-transfer {
+    background: rgba(52, 199, 89, 0.05);
+}
+
+.card-other {
+    background: rgba(142, 142, 147, 0.05);
+}
+
+.card-entertainment {
+    background: rgba(88, 86, 214, 0.05);
+}
+
+.card-food:hover {
+    box-shadow: 0 12px 32px rgba(255, 55, 95, 0.15);
+}
+
+.card-entertainment:hover {
+    box-shadow: 0 12px 32px rgba(88, 86, 214, 0.15);
+}
+
+.card-hospital:hover {
+    box-shadow: 0 12px 32px rgba(175, 82, 222, 0.15);
+}
+
+.card-fuel:hover {
+    box-shadow: 0 12px 32px rgba(0, 122, 255, 0.15);
+}
+
+.card-utilities:hover {
+    box-shadow: 0 12px 32px rgba(255, 159, 10, 0.15);
+}
+
+.card-transfer:hover {
+    box-shadow: 0 12px 32px rgba(52, 199, 89, 0.15);
+}
+
+.card-other:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.category-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+/* Localized glow around icon */
+.category-icon::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    background: inherit;
+    filter: blur(12px);
+    opacity: 0.4;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.icon-fuel {
+    background: rgba(0, 122, 255, 0.2);
+    color: #007AFF;
+}
+
+.icon-transfer {
+    background: rgba(52, 199, 89, 0.2);
+    color: var(--success-text);
+}
+
+.icon-utilities {
+    background: rgba(255, 159, 10, 0.2);
+    color: #FF9F0A;
+}
+
+.icon-food {
+    background: rgba(255, 55, 95, 0.2);
+    color: #FF375F;
+}
+
+.icon-hospital {
+    background: rgba(175, 82, 222, 0.2);
+    color: #AF52DE;
+}
+
+.icon-entertainment {
+    background: rgba(88, 86, 214, 0.2);
+    color: #5856D6;
+}
+
+.icon-education {
+    background: rgba(0, 122, 255, 0.2);
+    color: #007AFF;
+}
+
+.icon-travel {
+    background: rgba(255, 45, 85, 0.2);
+    color: #FF2D55;
+}
+
+.icon-gaming {
+    background: rgba(175, 82, 222, 0.2);
+    color: #AF52DE;
+}
+
+.icon-pets {
+    background: rgba(255, 159, 10, 0.2);
+    color: #FF9F0A;
+}
+
+.icon-other {
+    background: rgba(142, 142, 147, 0.2);
+    color: var(--text-secondary);
+}
+
+.icon-default {
+    background: rgba(142, 142, 147, 0.2);
+    color: var(--text-secondary);
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.status-healthy {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.status-warning {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.status-critical {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+.category-info {
+    margin-bottom: 18px;
+}
+
+.category-info h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 3px;
+}
+
+.category-info p {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+.budget-info {
+    margin-top: auto;
+}
+
+.budget-numbers {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+}
+
+.budget-numbers .spent {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.budget-numbers .limit {
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.8s ease-out;
+}
+
+@media (max-width: 768px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+}

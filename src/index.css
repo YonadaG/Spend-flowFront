@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  /* ========================================
+     FinanceFlow — Apple iOS-Inspired Theme
+     Glassmorphic, clean, premium
+     ======================================== */
+
+  /* SF Pro approximation (Inter is the closest web-safe match) */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+
+  /* Backgrounds */
+  --bg-body: #f5f5f7;             /* Apple-signature warm gray */
+  --bg-surface: rgba(255, 255, 255, 0.72);
+  --bg-surface-solid: #ffffff;
+  --bg-sidebar: rgba(255, 255, 255, 0.65);
+  --bg-elevated: rgba(255, 255, 255, 0.80);
+  --bg-frosted: rgba(255, 255, 255, 0.55);
+
+  /* Primary Accent — Vibrant Green (Apple-style) */
+  --primary: #34C759;
+  --primary-hover: #28a745;
+  --primary-light: rgba(52, 199, 89, 0.12);
+  --primary-lighter: rgba(52, 199, 89, 0.06);
+  --primary-text: #1B7A34;
+  --primary-glow: rgba(52, 199, 89, 0.25);
+
+  /* Text Colors — Apple grayscale */
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #aeaeb2;
+  --text-quaternary: #c7c7cc;
+  --text-main: #1d1d1f;
+  --text-body: #6e6e73;
+  --text-muted: #aeaeb2;
+
+  /* Status Colors */
+  --success-bg: rgba(52, 199, 89, 0.12);
+  --success-text: #248A3D;
+  --warning-bg: rgba(255, 159, 10, 0.12);
+  --warning-text: #C93400;
+  --danger-bg: rgba(255, 59, 48, 0.12);
+  --danger-text: #D70015;
+  --info-bg: rgba(0, 122, 255, 0.10);
+  --info-text: #0040DD;
+
+  /* Glassmorphism */
+  --glass-blur: 40px;
+  --glass-border: rgba(255, 255, 255, 0.45);
+  --glass-shadow: 0 2px 20px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.06);
+
+  /* Borders & Separators */
+  --border-color: rgba(0, 0, 0, 0.06);
+  --separator: rgba(60, 60, 67, 0.08);
+
+  /* Shadows — Apple-style layered */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.10), 0 0 1px rgba(0, 0, 0, 0.06);
+
+  /* Superellipse Corners (Apple squircle-like) */
+  --radius-xs: 8px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --sidebar-width: 272px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-spring: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.47;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+/* ========================================
+   TYPOGRAPHY — SF Pro-Inspired
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: 1.17rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ========================================
+   GLASSMORPHIC CARD — core component
+   ======================================== */
+.card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+  transition: box-shadow var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   BUTTONS — iOS-Inspired
+   ======================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  gap: 8px;
+  letter-spacing: -0.01em;
+  font-family: var(--font-family);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 16px var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-primary);
+}
+
+/* ========================================
+   FORM INPUTS — Apple-style
+   ======================================== */
+input, select, textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: var(--font-family);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  letter-spacing: -0.01em;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* ========================================
+   BADGES / PILLS — Frosted Pill Shapes
+   ======================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(10px);
+}
+
+.badge.green {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.badge.yellow {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.badge.red {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.badge.blue {
+  background: var(--info-bg);
+  color: var(--info-text);
+}
+
+/* ========================================
+   ICON BOXES — Superellipse
+   ======================================== */
+.icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: transform var(--transition-fast);
+}
+
+.icon-box.green {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.icon-box.blue {
+  background: var(--info-bg);
+  color: var(--info-text);
+}
+
+.icon-box.orange {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+/* ========================================
+   SCROLLBAR — Minimal Apple-style
+   ======================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--primary-glow); }
+  50% { box-shadow: 0 0 0 8px transparent; }
+}
+
+/* Selection */
+::selection {
+  background: var(--primary-light);
+  color: var(--text-primary);
+}

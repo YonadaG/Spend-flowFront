@@ -1,0 +1,286 @@
+/* ========================================
+   ADD CATEGORY — Apple iOS-Inspired
+   Glassmorphic Form
+   ======================================== */
+
+.add-category-container {
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.add-cat-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    font-size: 0.82rem;
+}
+
+.add-cat-breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.add-cat-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.add-cat-breadcrumb .separator {
+    color: var(--text-tertiary);
+}
+
+.add-cat-breadcrumb .current-page {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.add-category-header {
+    margin-bottom: 24px;
+}
+
+.add-category-header h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.035em;
+    margin-bottom: 4px;
+}
+
+.add-category-header p {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+
+.add-category-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
+}
+
+.add-cat-form-group {
+    margin-bottom: 20px;
+}
+
+.add-cat-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.add-cat-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+}
+
+.add-cat-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.add-cat-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.add-cat-textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+}
+
+.add-cat-textarea::placeholder {
+    color: var(--text-tertiary);
+}
+
+.add-cat-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Currency Input */
+.currency-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.currency-prefix {
+    position: absolute;
+    left: 14px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    pointer-events: none;
+}
+
+.currency-input-wrapper .add-cat-input {
+    padding-left: 2.25rem;
+}
+
+.currency-suffix {
+    position: absolute;
+    right: 14px;
+    color: var(--text-tertiary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+.add-cat-hint {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+/* Icon Selection */
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 1.15rem;
+    color: var(--text-tertiary);
+    transition: all var(--transition-fast);
+}
+
+.icon-btn:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.icon-btn.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+/* Actions */
+.add-cat-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--separator);
+}
+
+.add-cat-cancel {
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 0.88rem;
+    font-family: var(--font-family);
+}
+
+.add-cat-cancel:hover {
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text-primary);
+}
+
+.add-cat-submit {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-fast);
+    font-size: 0.88rem;
+    box-shadow: 0 2px 8px var(--primary-glow);
+    font-family: var(--font-family);
+}
+
+.add-cat-submit:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px var(--primary-glow);
+}
+
+.add-cat-submit:disabled {
+    background: var(--text-quaternary);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Pro Tip */
+.pro-tip-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: var(--primary-lighter);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(52, 199, 89, 0.15);
+}
+
+.pro-tip-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.pro-tip-box strong {
+    display: block;
+    color: var(--primary-text);
+    margin-bottom: 2px;
+    font-size: 0.85rem;
+}
+
+.pro-tip-box p {
+    font-size: 0.82rem;
+    color: var(--primary-text);
+    margin: 0;
+    line-height: 1.5;
+}
