@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { FaArrowUp, FaArrowDown, FaWallet, FaMagic, FaPlus, FaCloudUploadAlt, FaGasPump, FaHome, FaBolt, FaShoppingBag, FaBoxOpen, FaUniversity, FaFilm, FaGamepad, FaGraduationCap, FaPlane, FaUtensils, FaHospital, FaUser } from 'react-icons/fa';

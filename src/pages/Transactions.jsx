@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { FaSearch, FaPlus, FaGasPump, FaBriefcase, FaCloud, FaCoffee, FaHome, FaDownload, FaTrash, FaBoxOpen } from 'react-icons/fa';
 import { transactionAPI, categoryAPI } from '../services/api';
