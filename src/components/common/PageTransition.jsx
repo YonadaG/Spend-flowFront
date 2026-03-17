@@ -1,4 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 
 const pageVariants = {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+
 import { FaCloudUploadAlt, FaTrash, FaGasPump, FaUniversity, FaBolt, FaBoxOpen, FaArrowLeft, FaUtensils, FaHospital, FaChartLine, FaEdit, FaTimes } from 'react-icons/fa';
 import { categoryAPI, transactionAPI } from '../services/api';
 import { useToast } from '../context/ToastContext';

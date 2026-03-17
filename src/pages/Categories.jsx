@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import { FaGasPump, FaUniversity, FaBolt, FaBoxOpen, FaPlus, FaHospital, FaUtensils, FaFilm, FaGamepad, FaGraduationCap, FaPlane, FaPaw, FaEllipsisH } from 'react-icons/fa';
 import { categoryAPI, transactionAPI } from '../services/api';
@@ -97,6 +98,7 @@ const Categories = () => {
         } finally {
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showError]);
 
     useEffect(() => {
