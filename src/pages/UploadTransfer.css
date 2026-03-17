@@ -460,3 +460,79 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* Overlay for Manual Entry Prompt */
+.manual-entry-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+}
+
+.overlay-content {
+    background: white;
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    max-width: 90%;
+    width: 320px;
+    cursor: default;
+}
+
+.icon-circle-purple {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(175, 82, 222, 0.1);
+    color: #AF52DE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.overlay-content h4 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.overlay-content p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.overlay-content .divider {
+    height: 1px;
+    background: var(--separator);
+    margin: 20px 0;
+}
+
+.overlay-content .manual-prompt {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}

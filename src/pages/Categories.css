@@ -78,10 +78,23 @@
     overflow: hidden;
 }
 
+.dark-mode .category-card {
+    background: rgba(28, 28, 30, 0.6);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
 .category-card:hover {
     transform: translateY(-4px);
     background: rgba(255, 255, 255, 0.5);
     border-color: rgba(255, 255, 255, 0.7);
+}
+
+.dark-mode .category-card:hover {
+    background: rgba(28, 28, 30, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Category-specific Glass Tints & Hover Glows */
@@ -89,56 +102,112 @@
     background: rgba(255, 55, 95, 0.05);
 }
 
+.dark-mode .card-food {
+    background: rgba(255, 55, 95, 0.12);
+}
+
 .card-hospital {
     background: rgba(175, 82, 222, 0.05);
+}
+
+.dark-mode .card-hospital {
+    background: rgba(175, 82, 222, 0.12);
 }
 
 .card-fuel {
     background: rgba(0, 122, 255, 0.05);
 }
 
+.dark-mode .card-fuel {
+    background: rgba(0, 122, 255, 0.12);
+}
+
 .card-utilities {
     background: rgba(255, 159, 10, 0.05);
+}
+
+.dark-mode .card-utilities {
+    background: rgba(255, 159, 10, 0.12);
 }
 
 .card-transfer {
     background: rgba(52, 199, 89, 0.05);
 }
 
+.dark-mode .card-transfer {
+    background: rgba(52, 199, 89, 0.12);
+}
+
 .card-other {
     background: rgba(142, 142, 147, 0.05);
+}
+
+.dark-mode .card-other {
+    background: rgba(142, 142, 147, 0.12);
 }
 
 .card-entertainment {
     background: rgba(88, 86, 214, 0.05);
 }
 
+.dark-mode .card-entertainment {
+    background: rgba(88, 86, 214, 0.12);
+}
+
 .card-food:hover {
     box-shadow: 0 12px 32px rgba(255, 55, 95, 0.15);
+}
+
+.dark-mode .card-food:hover {
+    box-shadow: 0 12px 32px rgba(255, 55, 95, 0.3);
 }
 
 .card-entertainment:hover {
     box-shadow: 0 12px 32px rgba(88, 86, 214, 0.15);
 }
 
+.dark-mode .card-entertainment:hover {
+    box-shadow: 0 12px 32px rgba(88, 86, 214, 0.3);
+}
+
 .card-hospital:hover {
     box-shadow: 0 12px 32px rgba(175, 82, 222, 0.15);
+}
+
+.dark-mode .card-hospital:hover {
+    box-shadow: 0 12px 32px rgba(175, 82, 222, 0.3);
 }
 
 .card-fuel:hover {
     box-shadow: 0 12px 32px rgba(0, 122, 255, 0.15);
 }
 
+.dark-mode .card-fuel:hover {
+    box-shadow: 0 12px 32px rgba(0, 122, 255, 0.3);
+}
+
 .card-utilities:hover {
     box-shadow: 0 12px 32px rgba(255, 159, 10, 0.15);
+}
+
+.dark-mode .card-utilities:hover {
+    box-shadow: 0 12px 32px rgba(255, 159, 10, 0.3);
 }
 
 .card-transfer:hover {
     box-shadow: 0 12px 32px rgba(52, 199, 89, 0.15);
 }
 
+.dark-mode .card-transfer:hover {
+    box-shadow: 0 12px 32px rgba(52, 199, 89, 0.3);
+}
+
 .card-other:hover {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.dark-mode .card-other:hover {
+    box-shadow: 0 12px 32px rgba(142, 142, 147, 0.3);
 }
 
 .card-link {
@@ -168,6 +237,10 @@
     z-index: 1;
 }
 
+.dark-mode .category-icon {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
 /* Localized glow around icon */
 .category-icon::before {
     content: '';
@@ -180,9 +253,19 @@
     border-radius: 50%;
 }
 
+.dark-mode .category-icon::before {
+    opacity: 0.6;
+    filter: blur(16px);
+}
+
 .icon-fuel {
     background: rgba(0, 122, 255, 0.2);
     color: #007AFF;
+}
+
+.dark-mode .icon-fuel {
+    background: rgba(0, 122, 255, 0.25);
+    color: #0A84FF;
 }
 
 .icon-transfer {
@@ -190,8 +273,18 @@
     color: var(--success-text);
 }
 
+.dark-mode .icon-transfer {
+    background: rgba(52, 199, 89, 0.25);
+    color: #30D158;
+}
+
 .icon-utilities {
     background: rgba(255, 159, 10, 0.2);
+    color: #FF9F0A;
+}
+
+.dark-mode .icon-utilities {
+    background: rgba(255, 159, 10, 0.25);
     color: #FF9F0A;
 }
 
@@ -200,9 +293,19 @@
     color: #FF375F;
 }
 
+.dark-mode .icon-food {
+    background: rgba(255, 55, 95, 0.25);
+    color: #FF375F;
+}
+
 .icon-hospital {
     background: rgba(175, 82, 222, 0.2);
     color: #AF52DE;
+}
+
+.dark-mode .icon-hospital {
+    background: rgba(175, 82, 222, 0.25);
+    color: #BF5AF2;
 }
 
 .icon-entertainment {
@@ -210,13 +313,28 @@
     color: #5856D6;
 }
 
+.dark-mode .icon-entertainment {
+    background: rgba(88, 86, 214, 0.25);
+    color: #5E5CE6;
+}
+
 .icon-education {
     background: rgba(0, 122, 255, 0.2);
     color: #007AFF;
 }
 
+.dark-mode .icon-education {
+    background: rgba(0, 122, 255, 0.25);
+    color: #0A84FF;
+}
+
 .icon-travel {
     background: rgba(255, 45, 85, 0.2);
+    color: #FF2D55;
+}
+
+.dark-mode .icon-travel {
+    background: rgba(255, 45, 85, 0.25);
     color: #FF2D55;
 }
 
@@ -225,8 +343,18 @@
     color: #AF52DE;
 }
 
+.dark-mode .icon-gaming {
+    background: rgba(175, 82, 222, 0.25);
+    color: #BF5AF2;
+}
+
 .icon-pets {
     background: rgba(255, 159, 10, 0.2);
+    color: #FF9F0A;
+}
+
+.dark-mode .icon-pets {
+    background: rgba(255, 159, 10, 0.25);
     color: #FF9F0A;
 }
 
@@ -235,9 +363,19 @@
     color: var(--text-secondary);
 }
 
+.dark-mode .icon-other {
+    background: rgba(142, 142, 147, 0.25);
+    color: #98989D;
+}
+
 .icon-default {
     background: rgba(142, 142, 147, 0.2);
     color: var(--text-secondary);
+}
+
+.dark-mode .icon-default {
+    background: rgba(142, 142, 147, 0.25);
+    color: #98989D;
 }
 
 .status-badge {
@@ -307,6 +445,10 @@
     background: rgba(0, 0, 0, 0.04);
     border-radius: var(--radius-full);
     overflow: hidden;
+}
+
+.dark-mode .progress-bar-bg {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .progress-bar-fill {

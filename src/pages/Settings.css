@@ -297,3 +297,32 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Appearance Section */
+.settings-appearance-section {
+    padding: 16px 0;
+}
+
+.appearance-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.appearance-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.appearance-text strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.appearance-text span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}

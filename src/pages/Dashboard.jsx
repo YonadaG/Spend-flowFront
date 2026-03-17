@@ -6,6 +6,7 @@ import { FaArrowUp, FaArrowDown, FaWallet, FaMagic, FaPlus, FaCloudUploadAlt, Fa
 import { transactionAPI, categoryAPI } from '../services/api';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { PageTransition, StaggerContainer, AnimatedItem } from '../components/common/PageTransition';
+import ThemeToggle from '../components/common/ThemeToggle';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -155,6 +156,7 @@ const Dashboard = () => {
                                 <h1 className="text-3xl font-bold">Dashboard  </h1>
                             </div>
                             <div className="flex-center gap-4">
+                                <ThemeToggle variant="icon-only" />
                                 <div className="search-bar-mock">
                                     {/* Search placeholder */}
                                 </div>

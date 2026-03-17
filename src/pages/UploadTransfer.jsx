@@ -35,6 +35,7 @@ const UploadTransfer = () => {
     const [uploading, setUploading] = useState(false);
     const [processing, setProcessing] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [showManualPrompt, setShowManualPrompt] = useState(false);
 
     // Form fields
     const [amount, setAmount] = useState('');
@@ -162,7 +163,7 @@ const UploadTransfer = () => {
 
     const handleSubmit = async () => {
         if (!selectedFile) {
-            toastError('Please select a file to upload');
+            setShowManualPrompt(true);
             return;
         }
 
@@ -246,7 +247,24 @@ const UploadTransfer = () => {
             <div className="upload-header">
                 <div className="breadcrumbs">Transfers &gt; Upload & Categorize</div>
                 <h1>Upload & Categorize Transfer</h1>
-                <p className="subtitle">Upload your receipt. the engine will extract details automatically.</p>
+                <p className="subtitle" style={{marginBottom: "20px"}}>Upload your receipt. the engine will extract details automatically.</p>
+
+                <div className="transaction-type-toggle" style={{ maxWidth: '400px', margin: '0 auto 20px auto' }}>
+                    <button
+                        type="button"
+                        className="type-toggle-btn"
+                        onClick={() => navigate('/transactions/new')}
+                    >
+                        Manual Entry
+                    </button>
+                    <button
+                        type="button"
+                        className="type-toggle-btn active"
+                        style={{ color: 'var(--primary)', backgroundColor: 'white' }}
+                    >
+                        Auto Upload
+                    </button>
+                </div>
             </div>
 
             <div className="upload-grid">
@@ -301,7 +319,29 @@ const UploadTransfer = () => {
                 </div>
 
                 {/* Right Column: Transaction Details Form */}
-                <div className="verify-card">
+                <div className="verify-card relative" style={{ position: 'relative' }}>
+                    {showManualPrompt && (
+                        <div className="manual-entry-overlay" onClick={() => setShowManualPrompt(false)}>
+                            <div className="overlay-content" onClick={(e) => e.stopPropagation()}>
+                                <div className="icon-circle-purple mx-auto">
+                                    <FaMagic />
+                                </div>
+                                <h4>Auto-Fill Magic</h4>
+                                <p>Upload a receipt to extract details automatically.</p>
+                                <div className="divider"></div>
+                                <p className="manual-prompt">Want to enter details manually?</p>
+                                <button 
+                                    className="btn btn-primary w-full"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate('/transactions/new');
+                                    }}
+                                >
+                                    Go to Manual Entry
+                                </button>
+                            </div>
+                        </div>
+                    )}
                     <div className="flex-between mb-6">
                         <h3>Transaction Details</h3>
                         <span className="badge-ai"><FaMagic /> AI POWERED</span>
@@ -398,7 +438,7 @@ const UploadTransfer = () => {
                     <button
                         className="btn btn-primary w-full mt-4 flex-center gap-2"
                         onClick={handleSubmit}
-                        disabled={uploading || !selectedFile || processing}
+                        disabled={uploading || processing}
                     >
                         {uploading ? (
                             <><FaSpinner className="spin" /> Saving...</>

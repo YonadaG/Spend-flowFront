@@ -12,6 +12,8 @@ const Transactions = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [dateFilter, setDateFilter] = useState('all'); // 'all', 'today', 'week', 'month', 'specific-month'
+    const [selectedMonth, setSelectedMonth] = useState('');
     const navigate = useNavigate();
 
     // Map category names to icons
@@ -81,14 +83,69 @@ const Transactions = () => {
         });
     };
 
-    const filteredTransactions = transactions.filter(tx =>
-        (tx.description || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (tx.vendor || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (tx.merchant_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (tx.payment_reason || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (tx.invoice_no || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-        getCategoryName(tx).toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Filter transactions by date
+    const filterByDate = (tx) => {
+        if (dateFilter === 'all') return true;
+
+        const txDate = new Date(tx.created_at);
+        const now = new Date();
+
+        if (dateFilter === 'today') {
+            return txDate.toDateString() === now.toDateString();
+        }
+
+        if (dateFilter === 'week') {
+            const weekAgo = new Date(now);
+            weekAgo.setDate(now.getDate() - 7);
+            return txDate >= weekAgo;
+        }
+
+        if (dateFilter === 'month') {
+            const monthAgo = new Date(now);
+            monthAgo.setMonth(now.getMonth() - 1);
+            return txDate >= monthAgo;
+        }
+
+        if (dateFilter === 'specific-month' && selectedMonth) {
+            const [year, month] = selectedMonth.split('-');
+            return txDate.getFullYear() === parseInt(year) &&
+                txDate.getMonth() === parseInt(month) - 1;
+        }
+
+        return true;
+    };
+
+    // Get available months from transactions
+    const getAvailableMonths = () => {
+        const months = new Set();
+        transactions.forEach(tx => {
+            const date = new Date(tx.created_at);
+            if (!isNaN(date.getTime())) {
+                const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                months.add(monthKey);
+            }
+        });
+        return Array.from(months).sort().reverse();
+    };
+
+    const formatMonthLabel = (monthKey) => {
+        const [year, month] = monthKey.split('-');
+        const date = new Date(year, month - 1);
+        return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' });
+    };
+
+    const filteredTransactions = transactions.filter(tx => {
+        const matchesSearch = (tx.description || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (tx.vendor || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (tx.merchant_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (tx.payment_reason || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (tx.invoice_no || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            getCategoryName(tx).toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesDate = filterByDate(tx);
+
+        return matchesSearch && matchesDate;
+    });
 
     // Calculate totals
     const totalExpenses = transactions
@@ -188,7 +245,7 @@ const Transactions = () => {
                     {/* Filter Bar */}
                     <AnimatedItem>
                         <div className="card mb-6 p-4">
-                            <div className="flex-between gap-4">
+                            <div className="flex-between gap-4 mb-4">
                                 <div className="search-wrapper-light flex-1">
                                     <FaSearch className="search-icon-light" />
                                     <input
@@ -199,8 +256,74 @@ const Transactions = () => {
                                     />
                                 </div>
                                 <div className="flex-center gap-3">
-                                    <button className="btn btn-ghost text-red sm" onClick={() => setSearchTerm('')}>Clear All</button>
+                                    <button className="btn btn-ghost text-red sm" onClick={() => { setSearchTerm(''); setDateFilter('all'); setSelectedMonth(''); }}>Clear All</button>
                                 </div>
+                            </div>
+
+                            {/* Date Filter Buttons */}
+                            <div className="flex-center gap-2 mb-3">
+                                <motion.button
+                                    className={`btn ${dateFilter === 'all' ? 'btn-primary' : 'btn-ghost'} sm`}
+                                    onClick={() => { setDateFilter('all'); setSelectedMonth(''); }}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    All Time
+                                </motion.button>
+                                <motion.button
+                                    className={`btn ${dateFilter === 'today' ? 'btn-primary' : 'btn-ghost'} sm`}
+                                    onClick={() => { setDateFilter('today'); setSelectedMonth(''); }}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Today
+                                </motion.button>
+                                <motion.button
+                                    className={`btn ${dateFilter === 'week' ? 'btn-primary' : 'btn-ghost'} sm`}
+                                    onClick={() => { setDateFilter('week'); setSelectedMonth(''); }}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Last 7 Days
+                                </motion.button>
+                                <motion.button
+                                    className={`btn ${dateFilter === 'month' ? 'btn-primary' : 'btn-ghost'} sm`}
+                                    onClick={() => { setDateFilter('month'); setSelectedMonth(''); }}
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    Last 30 Days
+                                </motion.button>
+                            </div>
+
+                            {/* Month Selector */}
+                            <div className="flex-center gap-2">
+                                <label className="text-muted" style={{ fontSize: '0.875rem', fontWeight: '500' }}>
+                                    Filter by Month:
+                                </label>
+                                <select
+                                    className="form-select"
+                                    style={{
+                                        padding: '0.5rem 2rem 0.5rem 0.75rem',
+                                        borderRadius: '8px',
+                                        border: '1px solid #e0e0e0',
+                                        fontSize: '0.875rem',
+                                        cursor: 'pointer',
+                                        minWidth: '180px'
+                                    }}
+                                    value={selectedMonth}
+                                    onChange={(e) => {
+                                        setSelectedMonth(e.target.value);
+                                        setDateFilter(e.target.value ? 'specific-month' : 'all');
+                                    }}
+                                >
+                                    <option value="">Select a month...</option>
+                                    {getAvailableMonths().map(monthKey => (
+                                        <option key={monthKey} value={monthKey}>
+                                            {formatMonthLabel(monthKey)}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                     </AnimatedItem>
@@ -335,9 +458,9 @@ const Transactions = () => {
                             </motion.div>
                         </div>
                     </AnimatedItem>
-                </StaggerContainer>
-            </div>
-        </PageTransition>
+                </StaggerContainer >
+            </div >
+        </PageTransition >
     );
 };
 

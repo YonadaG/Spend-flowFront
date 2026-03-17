@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaBell, FaFileDownload, FaSave, FaShieldAlt, FaSignOutAlt, FaSlidersH, FaUserCircle } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import ThemeToggle from '../components/common/ThemeToggle';
 import api from '../services/api';
 import './Settings.css';
 
@@ -275,6 +276,27 @@ const Settings = () => {
                             <p className="settings-note">
                                 Notify me when category spending reaches this percentage of the monthly budget.
                             </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="card settings-card">
+                    <div className="settings-card-header">
+                        <h2 className="settings-card-title">
+                            <span className="section-icon">
+                                <FaSlidersH />
+                            </span>
+                            Appearance
+                        </h2>
+                    </div>
+
+                    <div className="settings-appearance-section">
+                        <div className="appearance-row">
+                            <div className="appearance-text">
+                                <strong>Theme Mode</strong>
+                                <span>Switch between light and dark mode</span>
+                            </div>
+                            <ThemeToggle />
                         </div>
                     </div>
                 </section>

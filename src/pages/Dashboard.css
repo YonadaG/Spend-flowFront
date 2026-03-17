@@ -25,6 +25,12 @@
     font-size: 1.1rem;
 }
 
+.dark-mode .profile-icon-circle {
+    background: var(--bg-surface);
+    border-color: var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 .profile-icon-circle:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
@@ -124,6 +130,11 @@
     padding: 16px 0 8px;
 }
 
+/* Ensure pie chart colors remain vibrant in dark mode */
+.dark-mode .pie-chart-wrapper {
+    /* Colors are defined in JS, no CSS override needed */
+}
+
 .legend-list {
     display: flex;
     flex-direction: column;
@@ -186,6 +197,10 @@
     font-size: 0.95rem;
 }
 
+.dark-mode .icon-circle-gray {
+    background: rgba(255, 255, 255, 0.08);
+}
+
 /* Status & Text Colors */
 .text-dark {
     color: var(--text-primary);
@@ -218,6 +233,10 @@
     padding: 4px 12px;
     border-radius: var(--radius-full);
     font-size: 0.72rem;
+}
+
+.dark-mode .category-pill {
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .status-dot-sm {

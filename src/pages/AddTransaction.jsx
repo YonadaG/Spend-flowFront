@@ -106,10 +106,7 @@ const AddTransaction = () => {
                 <FaArrowLeft /> Back to Transactions
             </Link>
 
-            <div className="add-tx-header">
-                <h1>Add Manual Transaction</h1>
-                <p>Record a transaction without uploading a receipt.</p>
-            </div>
+            <div className="add-tx-header"><h1>Add Manual Transaction</h1><p style={{marginBottom: '20px'}}>Record a transaction without uploading a receipt.</p><div className="add-tx-type-toggle" style={{ maxWidth: '400px', margin: '0 auto 20px auto' }}><button type="button" className="type-btn active income" style={{ color: 'var(--primary)', backgroundColor: 'white' }}>Manual Entry</button><button type="button" className="type-btn" onClick={() => navigate('/upload')}>Auto Upload</button></div></div>
 
             <div className="add-tx-card">
                 <form onSubmit={handleSubmit}>
@@ -281,3 +278,4 @@ const AddTransaction = () => {
 };
 
 export default AddTransaction;
+
