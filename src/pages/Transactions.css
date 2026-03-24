@@ -1,5 +1,5 @@
 /* ========================================
-   TRANSACTIONS PAGE — Apple iOS-Inspired
+   TRANSACTIONS PAGE  EApple iOS-Inspired
    Glassmorphic, Premium Table
    ======================================== */
 
@@ -454,5 +454,268 @@
 
     .pr-6 {
         padding-right: 12px;
+    }
+
+    /* Filter bar improvements */
+    .card.mb-6 {
+        padding: 1rem;
+    }
+
+    .flex-between {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .search-wrapper-light {
+        width: 100%;
+    }
+
+    .flex-center.gap-2 {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: flex-start;
+    }
+
+    .date-filter-select {
+        font-size: 0.75rem;
+        min-width: 85px;
+        max-width: 100px;
+        padding: 0.4rem 1.5rem 0.4rem 0.5rem;
+        height: 32px;
+    }
+
+    .date-filter-select-year {
+        min-width: 70px;
+        max-width: 80px;
+    }
+
+    .btn.sm {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        height: 32px;
+    }
+
+    .clear-filters-btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        height: 32px;
+    }
+}
+
+
+
+
+/* Mobile Transaction Table */
+@media (max-width: 768px) {
+    .transactions-table-wrap {
+        overflow: visible;
+    }
+
+    .transactions-table {
+        min-width: 100%;
+    }
+
+    .transactions-table thead {
+        display: none;
+    }
+
+    .transactions-table,
+    .transactions-table tbody,
+    .transactions-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .tx-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        border: 1px solid var(--separator);
+        border-radius: 12px;
+        padding: 1rem;
+        background: var(--bg-surface);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        align-items: center;
+    }
+
+    .tx-row:hover {
+        background: var(--bg-surface-hover);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .tx-row td {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: none;
+    }
+
+    /* Show only description and amount */
+    .tx-col-description {
+        width: 100%;
+        min-width: 100%;
+        grid-column: 1;
+        order: 1;
+    }
+
+    .tx-main-cell {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .icon-box-sm {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .tx-title {
+        font-size: 0.95rem;
+        max-width: 100%;
+        font-weight: 600;
+    }
+
+    .tx-meta {
+        font-size: 0.75rem;
+        max-width: 100%;
+    }
+
+    /* Amount and delete button row */
+    .col-amount {
+        grid-column: 1;
+        order: 2;
+        display: flex !important;
+        align-items: center;
+        padding: 0 !important;
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .tx-amount {
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .col-action {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        padding: 0 !important;
+    }
+
+    .btn-icon-ghost {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+    }
+
+    /* Hide these columns on mobile */
+    .tx-date,
+    .col-date,
+    .col-category,
+    .col-status,
+    .badge-pill,
+    .tx-status-cell {
+        display: none !important;
+    }
+
+    /* Pagination */
+    .pagination {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 640px) {
+    .transactions-container-light {
+        padding: 0.75rem;
+    }
+
+    .card {
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .transactions-header {
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+    }
+
+    .transactions-title {
+        font-size: 1.5rem;
+    }
+
+    .transactions-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .transactions-actions {
+        gap: 0.5rem;
+    }
+
+    .btn.sm {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        white-space: nowrap;
+    }
+
+    .search-wrapper-light input {
+        font-size: 0.85rem;
+        padding: 0.75rem 0.75rem 0.75rem 38px;
+    }
+
+    .flex-center.gap-2 {
+        gap: 0.5rem;
+        justify-content: flex-start;
+    }
+
+    .date-filter-select {
+        font-size: 0.75rem;
+        min-width: 85px;
+        max-width: 100px;
+        padding: 0.4rem 1.5rem 0.4rem 0.5rem;
+    }
+
+    .date-filter-select-year {
+        min-width: 70px;
+        max-width: 80px;
+    }
+
+    .clear-filters-btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        height: 32px;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .card h2 {
+        font-size: 1.25rem;
+    }
+
+    .text-xs {
+        font-size: 0.7rem;
+    }
+
+    .tx-row {
+        padding: 0.875rem;
+    }
+
+    .tx-title {
+        font-size: 0.9rem;
+    }
+
+    .tx-amount {
+        font-size: 1.15rem;
     }
 }

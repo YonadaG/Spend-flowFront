@@ -13,6 +13,9 @@ const Categories = () => {
     const { error: showError } = useToast();
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedMonth, setSelectedMonth] = useState('');
+    const [selectedYear, setSelectedYear] = useState('');
+    const [allTransactions, setAllTransactions] = useState([]);
 
 
     // Category icons mapping
@@ -53,6 +56,55 @@ const Categories = () => {
         return mockBudgets[category.name] || 500;
     };
 
+    // Filter transactions by selected month/year
+    const filterTransactionsByDate = (transactions) => {
+        if (!selectedMonth && !selectedYear) {
+            return transactions;
+        }
+
+        return transactions.filter(tx => {
+            const txDate = new Date(tx.occurred_at || tx.created_at);
+            let matches = true;
+
+            if (selectedYear) {
+                matches = matches && txDate.getFullYear() === parseInt(selectedYear);
+            }
+
+            if (selectedMonth) {
+                matches = matches && txDate.getMonth() === parseInt(selectedMonth) - 1;
+            }
+
+            return matches;
+        });
+    };
+
+    // Get available years from transactions
+    const getAvailableYears = () => {
+        const years = new Set();
+        allTransactions.forEach(tx => {
+            const date = new Date(tx.occurred_at || tx.created_at);
+            if (!isNaN(date.getTime())) {
+                years.add(date.getFullYear());
+            }
+        });
+        return Array.from(years).sort().reverse();
+    };
+
+    const months = [
+        { value: '1', label: 'January' },
+        { value: '2', label: 'February' },
+        { value: '3', label: 'March' },
+        { value: '4', label: 'April' },
+        { value: '5', label: 'May' },
+        { value: '6', label: 'June' },
+        { value: '7', label: 'July' },
+        { value: '8', label: 'August' },
+        { value: '9', label: 'September' },
+        { value: '10', label: 'October' },
+        { value: '11', label: 'November' },
+        { value: '12', label: 'December' }
+    ];
+
     const fetchCategories = useCallback(async () => {
         try {
             const [catsData, txsData] = await Promise.all([
@@ -62,10 +114,14 @@ const Categories = () => {
 
             // Handle pagination structure (response.data.transactions)
             const transactionsList = Array.isArray(txsData) ? txsData : (txsData.transactions || []);
+            setAllTransactions(transactionsList);
+
+            // Filter transactions by selected month/year
+            const filteredTransactions = filterTransactionsByDate(transactionsList);
 
             // Calculate spent amount per category
             const processedCategories = catsData.map(cat => {
-                const catTransactions = transactionsList.filter(tx => {
+                const catTransactions = filteredTransactions.filter(tx => {
                     return (tx.category && tx.category.id === cat.id) || tx.category_id === cat.id;
                 });
                 const totalSpent = catTransactions.reduce((sum, tx) => sum + parseFloat(tx.amount || 0), 0);
@@ -87,7 +143,8 @@ const Categories = () => {
                     icon: iconInfo.icon,
                     description: iconInfo.description,
                     colorClass: iconInfo.colorClass,
-                    percent: Math.min((totalSpent / limit) * 100, 100)
+                    percent: Math.min((totalSpent / limit) * 100, 100),
+                    transactionCount: catTransactions.length
                 };
             });
 
@@ -99,7 +156,7 @@ const Categories = () => {
             setLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showError]);
+    }, [showError, selectedMonth, selectedYear]);
 
     useEffect(() => {
         fetchCategories();
@@ -140,8 +197,32 @@ const Categories = () => {
 
                     <AnimatedItem>
                         <div className="categories-controls">
-                            <div className="date-selector">
-                                <span>📅 {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+                            <div className="date-filter-group">
+                                <select
+                                    className="date-filter-select"
+                                    value={selectedMonth}
+                                    onChange={(e) => setSelectedMonth(e.target.value)}
+                                >
+                                    <option value="">All Months</option>
+                                    {months.map(m => (
+                                        <option key={m.value} value={m.value}>
+                                            {m.label}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <select
+                                    className="date-filter-select date-filter-select-year"
+                                    value={selectedYear}
+                                    onChange={(e) => setSelectedYear(e.target.value)}
+                                >
+                                    <option value="">All Years</option>
+                                    {getAvailableYears().map(year => (
+                                        <option key={year} value={year}>
+                                            {year}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
                                 <Link to="/categories/new" className="add-category-btn">
@@ -186,15 +267,21 @@ const Categories = () => {
                                                     <span className="spent">${cat.spent.toFixed(2)} spent</span>
                                                     <span className="limit">${cat.limit} limit</span>
                                                 </div>
-                                                <div className="progress-bar-bg">
-                                                    <motion.div
-                                                        className="progress-bar-fill"
-                                                        initial={{ width: 0 }}
-                                                        animate={{ width: `${cat.percent}%` }}
-                                                        transition={{ duration: 0.8, delay: index * 0.1, ease: 'easeOut' }}
-                                                        style={{ backgroundColor: progressColor }}
-                                                    />
-                                                </div>
+                                                {cat.transactionCount === 0 ? (
+                                                    <div className="no-transactions-message">
+                                                        No transactions this period
+                                                    </div>
+                                                ) : (
+                                                    <div className="progress-bar-bg">
+                                                        <motion.div
+                                                            className="progress-bar-fill"
+                                                            initial={{ width: 0 }}
+                                                            animate={{ width: `${cat.percent}%` }}
+                                                            transition={{ duration: 0.8, delay: index * 0.1, ease: 'easeOut' }}
+                                                            style={{ backgroundColor: progressColor }}
+                                                        />
+                                                    </div>
+                                                )}
                                             </div>
                                         </Link>
 

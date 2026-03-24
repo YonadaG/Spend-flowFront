@@ -344,7 +344,7 @@ const UploadTransfer = () => {
                     )}
                     <div className="flex-between mb-6">
                         <h3>Transaction Details</h3>
-                        <span className="badge-ai"><FaMagic /> AI POWERED</span>
+                        <span className="badge-ai"><FaMagic /> Engine POWERED</span>
                     </div>
 
                     <div className="form-group">
@@ -546,7 +546,7 @@ const UploadTransfer = () => {
                     <div className="text-center py-10 px-4 text-gray-400">
                         <div className="mb-2 text-4xl opacity-20"><FaFileAlt /></div>
                         <p>Upload a receipt image to view the scanned text here.</p>
-                        <p className="text-xs mt-2 opacity-70">Our AI will read merchant names, dates, amounts, and descriptions automatically.</p>
+                        <p className="text-xs mt-2 opacity-70">Our engine will read merchant names, dates, amounts, and descriptions automatically.</p>
                     </div>
                 )}
             </div>

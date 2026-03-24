@@ -9,16 +9,19 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    // Remove local error state
-    // const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
     const { error: toastError } = useToast();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // setError('');
+        setIsLoading(true);
+        
         const result = await login(email, password);
+        
+        setIsLoading(false);
+        
         if (result.success) {
             navigate('/');
         } else {
@@ -28,6 +31,13 @@ const Login = () => {
 
     return (
         <div className="auth-container">
+            {/* Loading Bar */}
+            {isLoading && (
+                <div className="loading-bar-container">
+                    <div className="loading-bar"></div>
+                </div>
+            )}
+            
             <div className="auth-card glass-panel">
                 <div className="auth-header">
                     <div className="auth-logo">
@@ -50,6 +60,7 @@ const Login = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="name@example.com"
                                 required
+                                disabled={isLoading}
                             />
                         </div>
                     </div>
@@ -64,20 +75,22 @@ const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Enter your password"
                                 required
+                                disabled={isLoading}
                             />
                             <button
                                 type="button"
                                 className="password-toggle-btn"
                                 onClick={() => setShowPassword((prev) => !prev)}
                                 aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                disabled={isLoading}
                             >
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
                     </div>
 
-                    <button type="submit" className="btn btn-primary auth-btn">
-                        Sign In
+                    <button type="submit" className="btn btn-primary auth-btn" disabled={isLoading}>
+                        {isLoading ? 'Signing In...' : 'Sign In'}
                     </button>
                 </form>
 

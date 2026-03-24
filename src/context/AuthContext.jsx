@@ -40,15 +40,48 @@ export const AuthProvider = ({ children }) => {
                 setUser(user);
                 return { success: true };
             } else {
-                return { success: false, error: 'No token received' };
+                return { success: false, error: 'Authentication failed. No token received from server.' };
             }
         } catch (error) {
             console.error("Login failed", error);
-            const status = error.response?.status;
-            if (status === 401 || status === 404 || status === 422) {
-                return { success: false, error: 'Invalid email or password.' };
+            
+            // Network error - backend not reachable
+            if (!error.response) {
+                return { 
+                    success: false, 
+                    error: 'Unable to connect to server. Please check your internet connection or try again later.' 
+                };
             }
-            return { success: false, error: error.response?.data?.error || 'Login failed. Please try again.' };
+            
+            const status = error.response?.status;
+            const serverMessage = error.response?.data?.error;
+            
+            // Specific error messages based on status codes
+            if (status === 401) {
+                return { success: false, error: 'Invalid email or password. Please try again.' };
+            }
+            
+            if (status === 404) {
+                return { success: false, error: 'Account not found. Please check your email or sign up.' };
+            }
+            
+            if (status === 422) {
+                return { success: false, error: serverMessage || 'Invalid credentials. Please check your email and password.' };
+            }
+            
+            if (status === 500) {
+                return { success: false, error: 'Server error. Please try again later.' };
+            }
+            
+            if (status === 503) {
+                return { success: false, error: 'Service temporarily unavailable. Please try again in a few moments.' };
+            }
+            
+            // Generic error with server message if available
+            return { 
+                success: false, 
+                error: serverMessage || 'Login failed. Please try again or contact support if the problem persists.' 
+            };
         }
     };
 

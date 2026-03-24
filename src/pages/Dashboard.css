@@ -353,3 +353,241 @@
         width: 100%;
     }
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .dashboard-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dashboard-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+    }
+
+    .stat-change {
+        font-size: 0.75rem;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .chart-card {
+        padding: 1.25rem;
+    }
+
+    .chart-header h3 {
+        font-size: 1rem;
+    }
+
+    .recent-transactions-section {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .recent-transactions-table {
+        min-width: 500px;
+    }
+
+    .grid-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .summary-card {
+        padding: 1.25rem;
+    }
+
+    .summary-card .card-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .grid-main-split {
+        grid-template-columns: 1fr;
+    }
+
+    .pie-chart-wrapper {
+        padding: 1rem 0;
+    }
+
+    .legend-list {
+        gap: 1rem;
+    }
+
+    .legend-row {
+        font-size: 0.8rem;
+    }
+
+    .table-clean th {
+        font-size: 0.65rem;
+        padding-bottom: 10px;
+    }
+
+    .table-clean td {
+        padding: 10px 0;
+        font-size: 0.8rem;
+    }
+
+    .icon-circle-gray {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+
+    .category-pill {
+        font-size: 0.65rem;
+        padding: 3px 10px;
+    }
+
+    .text-green {
+        font-size: 0.75rem;
+    }
+
+    .text-orange {
+        font-size: 0.75rem;
+    }
+
+    .btn-icon {
+        font-size: 0.75rem;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 640px) {
+    .dashboard-container {
+        padding: 0.75rem;
+    }
+
+    .dashboard-header {
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.25rem;
+    }
+
+    .dashboard-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .chart-card {
+        padding: 1rem;
+    }
+
+    .chart-header h3 {
+        font-size: 0.95rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+    }
+
+    .summary-card .card-content h3 {
+        font-size: 1.25rem;
+    }
+
+    .summary-card .card-content p {
+        font-size: 0.7rem;
+    }
+
+    .table-clean {
+        font-size: 0.75rem;
+    }
+
+    .table-clean th {
+        font-size: 0.6rem;
+        padding-bottom: 8px;
+    }
+
+    .table-clean td {
+        padding: 8px 0;
+        font-size: 0.75rem;
+    }
+
+    .profile-icon-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .banner-card {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .banner-content {
+        gap: 1rem;
+    }
+
+    .banner-icon {
+        font-size: 1.2rem;
+    }
+
+    .banner-subtitle {
+        font-size: 0.65rem;
+    }
+
+    .banner-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .banner-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

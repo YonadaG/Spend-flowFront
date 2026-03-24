@@ -607,3 +607,449 @@
     color: var(--text-tertiary);
     font-style: italic;
 }
+
+/* Date Filter Styles */
+.cat-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cat-date-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cat-date-select {
+    padding: 0.4rem 1.5rem 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    min-width: 100px;
+    height: 32px;
+    background-color: #ffffff;
+    color: #374151;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23666' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.4rem center;
+    background-size: 10px;
+}
+
+.cat-date-select-year {
+    min-width: 80px;
+}
+
+.cat-date-select:hover {
+    border-color: var(--primary);
+    background-color: #f9fafb;
+}
+
+.cat-date-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.cat-date-select option {
+    background-color: #ffffff;
+    color: #374151;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    .cat-date-select {
+        background-color: #1f2937;
+        border-color: #374151;
+        color: #e5e7eb;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23999' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+    }
+
+    .cat-date-select:hover {
+        background-color: #374151;
+    }
+
+    .cat-date-select option {
+        background-color: #1c1c1e;
+        color: white;
+    }
+}
+
+.dark .cat-date-select {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23999' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+}
+
+.dark .cat-date-select:hover {
+    background-color: #374151;
+}
+
+.dark .cat-date-select option {
+    background-color: #1c1c1e;
+    color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .cat-detail-container {
+        padding: 1rem;
+    }
+
+    .cat-detail-back {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .cat-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cat-detail-title-section {
+        width: 100%;
+    }
+
+    .cat-detail-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+
+    .cat-detail-info h1 {
+        font-size: 1.5rem;
+    }
+
+    .cat-detail-info p {
+        font-size: 0.85rem;
+    }
+
+    .cat-detail-actions-top {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cat-detail-actions-top button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .cat-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .cat-stat-card {
+        padding: 1.25rem;
+    }
+
+    .cat-stat-label {
+        font-size: 0.75rem;
+    }
+
+    .cat-stat-value {
+        font-size: 1.75rem;
+    }
+
+    .cat-insights-box {
+        padding: 1.25rem;
+    }
+
+    .cat-insights-box h3 {
+        font-size: 1rem;
+    }
+
+    .cat-insights-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .cat-section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-top: 1.5rem !important;
+    }
+
+    .cat-section-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .cat-filter-group {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .cat-filter-tabs {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .cat-filter-tab {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.875rem;
+    }
+
+    .cat-date-filters {
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .cat-date-select {
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Transaction list mobile */
+    .cat-tx-list {
+        overflow: visible;
+    }
+
+    .cat-tx-header {
+        display: none;
+    }
+
+    .cat-tx-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1px solid var(--separator);
+        border-radius: 12px;
+        margin-bottom: 0.75rem;
+        background: var(--bg-surface);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        align-items: center;
+    }
+
+    .cat-tx-row:hover {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .cat-tx-vendor {
+        grid-column: 1;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .cat-tx-vendor h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .cat-tx-vendor span {
+        font-size: 0.75rem;
+    }
+
+    .cat-tx-date {
+        display: none;
+    }
+
+    .cat-tx-amount {
+        grid-column: 1;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .cat-tx-action {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cat-tx-action-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    /* Modal adjustments */
+    .cat-modal-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 1rem;
+        padding: 1.25rem;
+    }
+
+    .cat-modal-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .cat-modal-input,
+    .cat-modal-textarea {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .cat-detail-container {
+        padding: 0.75rem;
+    }
+
+    .cat-detail-back {
+        font-size: 0.8rem;
+    }
+
+    .cat-detail-header {
+        gap: 0.75rem;
+    }
+
+    .cat-detail-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    .cat-detail-info h1 {
+        font-size: 1.25rem;
+    }
+
+    .cat-detail-info p {
+        font-size: 0.8rem;
+    }
+
+    .cat-detail-actions-top {
+        gap: 0.4rem;
+    }
+
+    .cat-detail-actions-top button {
+        font-size: 0.8rem;
+        padding: 0.6rem;
+    }
+
+    .cat-stat-card {
+        padding: 1rem;
+    }
+
+    .cat-stat-label {
+        font-size: 0.7rem;
+    }
+
+    .cat-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .cat-insights-box {
+        padding: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .cat-insights-box h3 {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+
+    .cat-insights-grid {
+        gap: 0.75rem;
+    }
+
+    .cat-insight-item {
+        padding: 1rem;
+    }
+
+    .cat-insight-item .insight-label {
+        font-size: 0.7rem;
+    }
+
+    .cat-insight-item .insight-value {
+        font-size: 1.1rem;
+    }
+
+    .cat-section-header {
+        gap: 0.75rem;
+        margin-top: 1.25rem !important;
+    }
+
+    .cat-section-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .cat-filter-tabs {
+        gap: 0.4rem;
+    }
+
+    .cat-filter-tab {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .cat-date-select {
+        font-size: 0.7rem;
+        min-width: 0;
+        padding: 0.35rem 1.25rem 0.35rem 0.5rem;
+        height: 30px;
+    }
+
+    .cat-tx-row {
+        padding: 0.875rem;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .cat-tx-vendor h4 {
+        font-size: 0.9rem;
+    }
+
+    .cat-tx-vendor span {
+        font-size: 0.7rem;
+    }
+
+    .cat-tx-amount {
+        font-size: 1.15rem;
+    }
+
+    .cat-tx-action-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+
+    .cat-modal-content {
+        width: 95%;
+        max-width: 95%;
+        padding: 1rem;
+    }
+
+    .cat-modal-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .cat-modal-group {
+        margin-bottom: 1rem;
+    }
+
+    .cat-modal-input,
+    .cat-modal-textarea {
+        font-size: 0.85rem;
+        padding: 0.75rem;
+    }
+
+    .cat-modal-actions {
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .cat-modal-cancel,
+    .cat-modal-save {
+        font-size: 0.8rem;
+        padding: 0.6rem 1rem;
+    }
+}

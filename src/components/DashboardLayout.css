@@ -14,3 +14,21 @@
     padding: 32px 40px;
     min-height: 100vh;
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 5rem 1rem 2rem 1rem;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+@media (max-width: 640px) {
+    .main-content {
+        padding: 4.5rem 0.75rem 1.5rem 0.75rem;
+    }
+}

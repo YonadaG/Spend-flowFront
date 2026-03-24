@@ -4,7 +4,13 @@ import { FaThLarge, FaExchangeAlt, FaChartPie, FaCreditCard, FaUserCog, FaSignOu
 import { BiCategory } from "react-icons/bi";
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({ onLinkClick }) => {
+    const handleLinkClick = () => {
+        if (onLinkClick) {
+            onLinkClick();
+        }
+    };
+
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
@@ -20,23 +26,23 @@ const Sidebar = () => {
             </div>
 
             <nav className="sidebar-nav">
-                <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <NavLink to="/" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={handleLinkClick}>
                     <FaThLarge className="nav-icon" />
                     <span>Dashboard</span>
                 </NavLink>
-                <NavLink to="/transactions" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <NavLink to="/transactions" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={handleLinkClick}>
                     <FaExchangeAlt className="nav-icon" />
                     <span>Transactions</span>
                 </NavLink>
-                <NavLink to="/categories" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <NavLink to="/categories" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={handleLinkClick}>
                     <BiCategory className="nav-icon" />
                     <span>Categories</span>
                 </NavLink>
-                <NavLink to="/reports" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <NavLink to="/reports" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={handleLinkClick}>
                     <FaChartPie className="nav-icon" />
                     <span>Reports</span>
                 </NavLink>
-                <NavLink to="/accounts" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <NavLink to="/accounts" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={handleLinkClick}>
                     <FaCreditCard className="nav-icon" />
                     <span>Accounts</span>
                 </NavLink>
@@ -45,7 +51,7 @@ const Sidebar = () => {
             <div className="sidebar-section-title">PREFERENCES</div>
 
             <nav className="sidebar-nav">
-                <NavLink to="/settings" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                <NavLink to="/settings" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={handleLinkClick}>
                     <FaUserCog className="nav-icon" />
                     <span>Settings</span>
                 </NavLink>

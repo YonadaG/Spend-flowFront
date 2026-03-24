@@ -13,8 +13,9 @@ const Transactions = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
-    const [dateFilter, setDateFilter] = useState('all'); // 'all', 'today', 'week', 'month', 'specific-month'
-    const [selectedMonth, setSelectedMonth] = useState('');
+    const [dateFilter, setDateFilter] = useState('all'); // 'all', 'today', 'week'
+    const [selectedMonth, setSelectedMonth] = useState(''); // 1-12 or empty
+    const [selectedYear, setSelectedYear] = useState(''); // YYYY or empty
     const navigate = useNavigate();
 
     // Map category names to icons
@@ -86,10 +87,26 @@ const Transactions = () => {
 
     // Filter transactions by date
     const filterByDate = (tx) => {
-        if (dateFilter === 'all') return true;
-
-        const txDate = new Date(tx.created_at);
+        const txDate = new Date(tx.occurred_at || tx.created_at);
         const now = new Date();
+
+        // Apply month/year filters first if selected
+        if (selectedMonth || selectedYear) {
+            let matches = true;
+
+            if (selectedYear) {
+                matches = matches && txDate.getFullYear() === parseInt(selectedYear);
+            }
+
+            if (selectedMonth) {
+                matches = matches && txDate.getMonth() === parseInt(selectedMonth) - 1;
+            }
+
+            return matches;
+        }
+
+        // Otherwise apply quick filters
+        if (dateFilter === 'all') return true;
 
         if (dateFilter === 'today') {
             return txDate.toDateString() === now.toDateString();
@@ -101,39 +118,35 @@ const Transactions = () => {
             return txDate >= weekAgo;
         }
 
-        if (dateFilter === 'month') {
-            const monthAgo = new Date(now);
-            monthAgo.setMonth(now.getMonth() - 1);
-            return txDate >= monthAgo;
-        }
-
-        if (dateFilter === 'specific-month' && selectedMonth) {
-            const [year, month] = selectedMonth.split('-');
-            return txDate.getFullYear() === parseInt(year) &&
-                txDate.getMonth() === parseInt(month) - 1;
-        }
-
         return true;
     };
 
-    // Get available months from transactions
-    const getAvailableMonths = () => {
-        const months = new Set();
+    // Get available years from transactions
+    const getAvailableYears = () => {
+        const years = new Set();
         transactions.forEach(tx => {
-            const date = new Date(tx.created_at);
+            const date = new Date(tx.occurred_at || tx.created_at);
             if (!isNaN(date.getTime())) {
-                const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-                months.add(monthKey);
+                years.add(date.getFullYear());
             }
         });
-        return Array.from(months).sort().reverse();
+        return Array.from(years).sort().reverse();
     };
 
-    const formatMonthLabel = (monthKey) => {
-        const [year, month] = monthKey.split('-');
-        const date = new Date(year, month - 1);
-        return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long' });
-    };
+    const months = [
+        { value: '1', label: 'January' },
+        { value: '2', label: 'February' },
+        { value: '3', label: 'March' },
+        { value: '4', label: 'April' },
+        { value: '5', label: 'May' },
+        { value: '6', label: 'June' },
+        { value: '7', label: 'July' },
+        { value: '8', label: 'August' },
+        { value: '9', label: 'September' },
+        { value: '10', label: 'October' },
+        { value: '11', label: 'November' },
+        { value: '12', label: 'December' }
+    ];
 
     const filteredTransactions = transactions.filter(tx => {
         const matchesSearch = (tx.description || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -257,15 +270,15 @@ const Transactions = () => {
                                     />
                                 </div>
                                 <div className="flex-center gap-3">
-                                    <button className="btn btn-ghost text-red sm" onClick={() => { setSearchTerm(''); setDateFilter('all'); setSelectedMonth(''); }}>Clear All</button>
+                                    <button className="btn btn-ghost text-red sm" onClick={() => { setSearchTerm(''); setDateFilter('all'); setSelectedMonth(''); setSelectedYear(''); }}>Clear All</button>
                                 </div>
                             </div>
 
                             {/* Date Filter Buttons */}
-                            <div className="flex-center gap-2 mb-3">
+                            <div className="flex-center gap-2 mb-3 flex-wrap">
                                 <motion.button
-                                    className={`btn ${dateFilter === 'all' ? 'btn-primary' : 'btn-ghost'} sm`}
-                                    onClick={() => { setDateFilter('all'); setSelectedMonth(''); }}
+                                    className={`btn ${dateFilter === 'all' && !selectedMonth && !selectedYear ? 'btn-primary' : 'btn-ghost'} sm`}
+                                    onClick={() => { setDateFilter('all'); setSelectedMonth(''); setSelectedYear(''); }}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -273,7 +286,7 @@ const Transactions = () => {
                                 </motion.button>
                                 <motion.button
                                     className={`btn ${dateFilter === 'today' ? 'btn-primary' : 'btn-ghost'} sm`}
-                                    onClick={() => { setDateFilter('today'); setSelectedMonth(''); }}
+                                    onClick={() => { setDateFilter('today'); setSelectedMonth(''); setSelectedYear(''); }}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -281,47 +294,43 @@ const Transactions = () => {
                                 </motion.button>
                                 <motion.button
                                     className={`btn ${dateFilter === 'week' ? 'btn-primary' : 'btn-ghost'} sm`}
-                                    onClick={() => { setDateFilter('week'); setSelectedMonth(''); }}
+                                    onClick={() => { setDateFilter('week'); setSelectedMonth(''); setSelectedYear(''); }}
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
                                     Last 7 Days
                                 </motion.button>
-                                <motion.button
-                                    className={`btn ${dateFilter === 'month' ? 'btn-primary' : 'btn-ghost'} sm`}
-                                    onClick={() => { setDateFilter('month'); setSelectedMonth(''); }}
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                >
-                                    Last 30 Days
-                                </motion.button>
-                            </div>
 
-                            {/* Month Selector */}
-                            <div className="flex-center gap-2">
-                                <label className="text-muted" style={{ fontSize: '0.875rem', fontWeight: '500' }}>
-                                    Filter by Month:
-                                </label>
+                                {/* Month Dropdown */}
                                 <select
-                                    className="form-select"
-                                    style={{
-                                        padding: '0.5rem 2rem 0.5rem 0.75rem',
-                                        borderRadius: '8px',
-                                        border: '1px solid #e0e0e0',
-                                        fontSize: '0.875rem',
-                                        cursor: 'pointer',
-                                        minWidth: '180px'
-                                    }}
+                                    className="date-filter-select"
                                     value={selectedMonth}
                                     onChange={(e) => {
                                         setSelectedMonth(e.target.value);
-                                        setDateFilter(e.target.value ? 'specific-month' : 'all');
+                                        setDateFilter('all');
                                     }}
                                 >
-                                    <option value="">Select a month...</option>
-                                    {getAvailableMonths().map(monthKey => (
-                                        <option key={monthKey} value={monthKey}>
-                                            {formatMonthLabel(monthKey)}
+                                    <option value="">Month</option>
+                                    {months.map(m => (
+                                        <option key={m.value} value={m.value}>
+                                            {m.label}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                {/* Year Dropdown */}
+                                <select
+                                    className="date-filter-select date-filter-select-year"
+                                    value={selectedYear}
+                                    onChange={(e) => {
+                                        setSelectedYear(e.target.value);
+                                        setDateFilter('all');
+                                    }}
+                                >
+                                    <option value="">Year</option>
+                                    {getAvailableYears().map(year => (
+                                        <option key={year} value={year}>
+                                            {year}
                                         </option>
                                     ))}
                                 </select>
@@ -357,9 +366,18 @@ const Transactions = () => {
                                                     initial={{ opacity: 0, y: 4 }}
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ delay: Math.min(index * 0.03, 0.6), duration: 0.25 }}
+                                                    onClick={() => {
+                                                        // Navigate to category details if category exists
+                                                        if (tx.category && tx.category.id) {
+                                                            navigate(`/categories/${tx.category.id}`);
+                                                        } else if (tx.category_id) {
+                                                            navigate(`/categories/${tx.category_id}`);
+                                                        }
+                                                    }}
+                                                    style={{ cursor: (tx.category || tx.category_id) ? 'pointer' : 'default' }}
                                                 >
                                                     <td className="pl-6 text-muted tx-date">
-                                                        {formatTransactionDate(tx.created_at)}
+                                                        {formatTransactionDate(tx.occurred_at || tx.created_at)}
                                                     </td>
                                                     <td className="tx-col-description">
                                                         <div className="tx-main-cell">
@@ -394,7 +412,10 @@ const Transactions = () => {
                                                     <td className="text-right pr-6">
                                                         <motion.button
                                                             className="btn-icon-ghost"
-                                                            onClick={() => handleDelete(tx.id)}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation(); // Prevent row click
+                                                                handleDelete(tx.id);
+                                                            }}
                                                             aria-label="Delete transaction"
                                                             title="Delete transaction"
                                                             whileHover={{ scale: 1.15 }}
@@ -452,7 +473,7 @@ const Transactions = () => {
                                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                             >
                                 <div className="relative z-10">
-                                    <p className="text-green-dark text-xs uppercase font-bold">AI Categorization</p>
+                                    <p className="text-green-dark text-xs uppercase font-bold"> Engine Categorization</p>
                                     <h2 className="mt-2 text-dark">{transactions.filter(t => t.status === 'processed').length} Processed</h2>
                                 </div>
                                 <div className="bg-shape"></div>
