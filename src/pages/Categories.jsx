@@ -13,8 +13,10 @@ const Categories = () => {
     const { error: showError } = useToast();
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedMonth, setSelectedMonth] = useState('');
-    const [selectedYear, setSelectedYear] = useState('');
+    // Default to current month (fresh start each month)
+    const now = new Date();
+    const [selectedMonth, setSelectedMonth] = useState(String(now.getMonth() + 1));
+    const [selectedYear, setSelectedYear] = useState(String(now.getFullYear()));
     const [allTransactions, setAllTransactions] = useState([]);
 
 

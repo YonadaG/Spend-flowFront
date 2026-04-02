@@ -1,20 +1,89 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { FaArrowUp, FaArrowDown, FaWallet, FaMagic, FaPlus, FaCloudUploadAlt, FaGasPump, FaHome, FaBolt, FaShoppingBag, FaBoxOpen, FaUniversity, FaFilm, FaGamepad, FaGraduationCap, FaPlane, FaUtensils, FaHospital, FaUser } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { FaArrowUp, FaArrowDown, FaWallet, FaPlus, FaCloudUploadAlt, FaGasPump, FaHome, FaBolt, FaShoppingBag, FaBoxOpen, FaUniversity, FaFilm, FaGamepad, FaGraduationCap, FaPlane, FaUtensils, FaHospital, FaUser, FaCalendarAlt, FaChevronDown, FaRocket } from 'react-icons/fa';
 import { transactionAPI, categoryAPI } from '../services/api';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { PageTransition, StaggerContainer, AnimatedItem } from '../components/common/PageTransition';
 import ThemeToggle from '../components/common/ThemeToggle';
 import './Dashboard.css';
 
+const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+];
+
 const Dashboard = () => {
     const navigate = useNavigate();
+    const now = new Date();
+    const currentMonth = now.getMonth(); // 0-indexed
+    const currentYear = now.getFullYear();
+
+    const [allTransactions, setAllTransactions] = useState([]);
     const [transactions, setTransactions] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Month filter: defaults to current month (fresh start each month)
+    const [viewMode, setViewMode] = useState('month'); // 'month' or 'year'
+    const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+    const [selectedYear, setSelectedYear] = useState(currentYear);
+    const [showMonthDropdown, setShowMonthDropdown] = useState(false);
+
+    // New Month popup
+    const [showNewMonthPopup, setShowNewMonthPopup] = useState(false);
+
+    // Check if we should show the "New Month, New Flow" popup
+    useEffect(() => {
+        const popupKey = `new_month_popup_${currentYear}_${currentMonth}`;
+        const alreadyShown = localStorage.getItem(popupKey);
+        if (!alreadyShown) {
+            setShowNewMonthPopup(true);
+            localStorage.setItem(popupKey, 'true');
+        }
+    }, [currentYear, currentMonth]);
+
+    // Filter transactions based on view mode
+    const filterTransactions = (txArray) => {
+        if (viewMode === 'year') {
+            return txArray.filter(tx => {
+                const d = new Date(tx.occurred_at || tx.created_at);
+                return d.getFullYear() === selectedYear;
+            });
+        }
+        // month mode
+        return txArray.filter(tx => {
+            const d = new Date(tx.occurred_at || tx.created_at);
+            return d.getMonth() === selectedMonth && d.getFullYear() === selectedYear;
+        });
+    };
+
+    // Get available months that have data
+    const getAvailableMonths = () => {
+        const months = new Set();
+        allTransactions.forEach(tx => {
+            const d = new Date(tx.occurred_at || tx.created_at);
+            if (d.getFullYear() === selectedYear) {
+                months.add(d.getMonth());
+            }
+        });
+        // Always include the current month
+        months.add(currentMonth);
+        return Array.from(months).sort((a, b) => b - a);
+    };
+
+    // Get available years
+    const getAvailableYears = () => {
+        const years = new Set();
+        allTransactions.forEach(tx => {
+            const d = new Date(tx.occurred_at || tx.created_at);
+            if (!isNaN(d.getTime())) years.add(d.getFullYear());
+        });
+        years.add(currentYear);
+        return Array.from(years).sort((a, b) => b - a);
+    };
 
     // Category icon mapping
     const getCategoryIcon = (nameOrIcon) => {
@@ -60,7 +129,8 @@ const Dashboard = () => {
                 ]);
                 // Defensive check to ensure we always have an array
                 const txArray = Array.isArray(txData.transactions) ? txData.transactions : (Array.isArray(txData) ? txData : []);
-                setTransactions(txArray);
+                setAllTransactions(txArray);
+                setTransactions(filterTransactions(txArray));
                 setCategories(catData);
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
@@ -69,7 +139,16 @@ const Dashboard = () => {
             }
         };
         fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Re-filter whenever view mode, month, or year changes
+    useEffect(() => {
+        if (allTransactions.length > 0) {
+            setTransactions(filterTransactions(allTransactions));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [viewMode, selectedMonth, selectedYear]);
 
     // Get category name by ID
     const getCategoryName = (categoryId) => {
@@ -147,20 +226,128 @@ const Dashboard = () => {
         );
     }
 
+    const viewLabel = viewMode === 'year'
+        ? `All of ${selectedYear}`
+        : `${MONTH_NAMES[selectedMonth]} ${selectedYear}`;
+
     return (
         <PageTransition>
             <div className="dashboard-container">
+                {/* ===== New Month, New Flow Popup ===== */}
+                <AnimatePresence>
+                    {showNewMonthPopup && (
+                        <motion.div
+                            className="new-month-overlay"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowNewMonthPopup(false)}
+                        >
+                            <motion.div
+                                className="new-month-popup"
+                                initial={{ opacity: 0, scale: 0.7, y: 40 }}
+                                animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="new-month-icon">
+                                    <FaRocket />
+                                </div>
+                                <h2>New Month, New Flow 🚀</h2>
+                                <p>It&apos;s <strong>{MONTH_NAMES[currentMonth]} {currentYear}</strong>! Your dashboard has been reset for a fresh start. Time to set new goals and crush them!</p>
+                                <motion.button
+                                    className="btn btn-primary lg new-month-btn"
+                                    onClick={() => setShowNewMonthPopup(false)}
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97 }}
+                                >
+                                    Let&apos;s Go!
+                                </motion.button>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 <StaggerContainer>
                     <AnimatedItem>
                         <header className="flex-between mb-8">
                             <div>
-                                <h1 className="text-3xl font-bold">Dashboard  </h1>
+                                <h1 className="text-3xl font-bold">Dashboard</h1>
+                                <span className="dashboard-period-label">
+                                    <FaCalendarAlt /> {viewLabel}
+                                </span>
                             </div>
                             <div className="flex-center gap-4">
-                                <ThemeToggle variant="icon-only" />
-                                <div className="search-bar-mock">
-                                    {/* Search placeholder */}
+                                {/* ===== Month Filter Controls ===== */}
+                                <div className="month-filter-bar">
+                                    <motion.button
+                                        className={`month-filter-btn ${viewMode === 'year' ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setViewMode(viewMode === 'year' ? 'month' : 'year');
+                                            if (viewMode === 'month') {
+                                                // switching TO year view
+                                            } else {
+                                                setSelectedMonth(currentMonth);
+                                            }
+                                        }}
+                                        whileHover={{ y: -1 }}
+                                        whileTap={{ scale: 0.96 }}
+                                    >
+                                        {viewMode === 'year' ? 'This Month' : 'All Year'}
+                                    </motion.button>
+
+                                    <div className="month-dropdown-wrapper">
+                                        <motion.button
+                                            className="month-dropdown-trigger"
+                                            onClick={() => setShowMonthDropdown(!showMonthDropdown)}
+                                            whileHover={{ y: -1 }}
+                                            whileTap={{ scale: 0.96 }}
+                                        >
+                                            {MONTH_NAMES[selectedMonth].substring(0, 3)} <FaChevronDown className={`chevron-icon ${showMonthDropdown ? 'open' : ''}`} />
+                                        </motion.button>
+
+                                        <AnimatePresence>
+                                            {showMonthDropdown && (
+                                                <motion.div
+                                                    className="month-dropdown-menu"
+                                                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                                                    transition={{ duration: 0.18 }}
+                                                >
+                                                    {getAvailableYears().map(year => (
+                                                        <div key={year} className="month-dropdown-year-group">
+                                                            <div className="month-dropdown-year-label">{year}</div>
+                                                            <div className="month-dropdown-grid">
+                                                                {MONTH_NAMES.map((name, idx) => {
+                                                                    const isActive = selectedMonth === idx && selectedYear === year && viewMode === 'month';
+                                                                    const isCurrent = idx === currentMonth && year === currentYear;
+                                                                    return (
+                                                                        <button
+                                                                            key={idx}
+                                                                            className={`month-dropdown-item ${isActive ? 'active' : ''} ${isCurrent ? 'current' : ''}`}
+                                                                            onClick={() => {
+                                                                                setSelectedMonth(idx);
+                                                                                setSelectedYear(year);
+                                                                                setViewMode('month');
+                                                                                setShowMonthDropdown(false);
+                                                                            }}
+                                                                        >
+                                                                            {name.substring(0, 3)}
+                                                                        </button>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
                                 </div>
+
+                                <ThemeToggle variant="icon-only" />
                                 <div className="profile-icon-circle" onClick={() => navigate('/settings')}>
                                     <FaUser />
                                 </div>
